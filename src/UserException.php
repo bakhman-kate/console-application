@@ -2,8 +2,6 @@
 
 namespace Plp\Task;
 
-use yii\base\Exception;
-
-class UserException extends Exception {
+class UserException extends \Exception {
     
 }
