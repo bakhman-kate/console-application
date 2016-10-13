@@ -1,6 +1,14 @@
 <?php
 
 Yii::setAlias('@tests', dirname(__DIR__) . '/tests/codeception');
+Yii::$classMap = [
+    'Plp\Task\account' => '@app/src/account.php',
+    'Plp\Task\domain' => '@app/src/domain.php',
+    'Plp\Task\integration' => '@app/src/integration.php',
+    'Plp\Task\message' => '@app/src/message.php',
+    'Plp\Task\FatalException' => '@app/src/FatalException.php',
+    'Plp\Task\UserException' => '@app/src/UserException.php',
+];
 
 $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
