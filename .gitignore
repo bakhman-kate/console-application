@@ -26,8 +26,8 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-/assets
-/controllers
-/mail
-/views
-/web
+assets/
+controllers/
+mail/
+views/
+web/
