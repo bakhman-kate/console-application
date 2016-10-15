@@ -21,8 +21,8 @@ class m161012_124647_create_task_table extends Migration
             'task' => $this->string(45)->defaultValue(null),
             'action' => $this->string(45)->defaultValue(null),
             'data' => $this->text(),
-            'status' => 'tinyint(2) DEFAULT NULL',
-            'retries' => 'tinyint(2) DEFAULT NULL',
+            'status' => 'tinyint(2) DEFAULT 0',
+            'retries' => 'tinyint(2) DEFAULT 0',
             'finished' => $this->datetime()->defaultValue(null),
             'result' => $this->text(),
         ]);
@@ -36,7 +36,7 @@ class m161012_124647_create_task_table extends Migration
             'created' => '2016­02­14 13:09:15',            
             'task' => 'integration',
             'action' => 'process',
-            'data' => '{\"integration_id\":3312,\"lead_id\":\"2999670\"}',            
+            'data' => '{"integration_id":3312,"lead_id":"2999670"}',            
         ]);
 
         $this->insert('task', [
@@ -45,7 +45,7 @@ class m161012_124647_create_task_table extends Migration
             'created' => '2016­02­14 13:08:16',            
             'task' => 'message',
             'action' => 'sms',
-            'data' => '{\"number\":\"89111111119\",\"message\":\"Заявка с ru.ru\\nвячеслав \\n\"}',            
+            'data' => '{"number":"89111111119","message":"Заявка с ru.ru\\nвячеслав \\n"}',            
         ]);
         
         $this->insert('task', [
@@ -54,7 +54,7 @@ class m161012_124647_create_task_table extends Migration
             'created' => '2016­02­14 13:06:42',            
             'task' => 'account',
             'action' => 'bill',
-            'data' => '{\"bill_id\":\"82029\"}',            
+            'data' => '{"bill_id":"82029"}',            
         ]);
         
         $this->insert('task', [
@@ -63,7 +63,7 @@ class m161012_124647_create_task_table extends Migration
             'created' => '2016­02­14 13:01:58',            
             'task' => 'integration',
             'action' => 'process',
-            'data' => '{\"integration_id\":2845,\"lead_id\":\"2999571\"}',            
+            'data' => '{"integration_id":2845,"lead_id":"2999571"}',            
         ]);
 
         $this->insert('task', [
@@ -72,7 +72,7 @@ class m161012_124647_create_task_table extends Migration
             'created' => '2016­02­14 13:01:53',            
             'task' => 'integration',
             'action' => 'process',
-            'data' => '{\"integration_id\":2987,\"lead_id\":\"2999570\"}',            
+            'data' => '{"integration_id":2987,"lead_id":"2999570"}',            
         ]);
 
         $this->insert('task', [
@@ -81,8 +81,26 @@ class m161012_124647_create_task_table extends Migration
             'created' => '2016­02­14 13:01:03',            
             'task' => 'domain',
             'action' => 'addzone',
-            'data' => '{\"domain\":\"mydomain.ru\"}',            
-        ]);        
+            'data' => '{"domain":"mydomain.ru"}',            
+        ]);
+
+        $this->insert('task', [
+            'id' => 2980000,
+            'account_id' => 9608,
+            'created' => '2016­02­14 13:01:53',            
+            'task' => 'domain',
+            'action' => 'first',
+            'data' => '{"first": true, "second": 2}',            
+        ]);
+
+        $this->insert('task', [
+            'id' => 2980005,
+            'account_id' => 83992,
+            'created' => '2016­02­14 13:01:03',            
+            'task' => 'alpha',
+            'action' => 'beta',
+            'data' => '{"big": "data"}',            
+        ]);
     }
 
     /**
@@ -90,6 +108,8 @@ class m161012_124647_create_task_table extends Migration
      */
     public function safeDown()
     {
+        $this->delete('task', ['id' => 2980005]);
+        $this->delete('task', ['id' => 2980000]);
         $this->delete('task', ['id' => 2971107]);
         $this->delete('task', ['id' => 2971122]);
         $this->delete('task', ['id' => 2971123]);
