@@ -25,20 +25,30 @@ class TaskController extends Controller
             ->all();
         
         foreach($tasks as $task) {
-            $taskClass = $task->task;
+            $taskClass = 'Plp\\Task\\'.$task->task;
             $taskMethod = $task->action;
             $taskData = json_decode($task->data, true);
             $task->updateAttributes(['status' => self::STATUS_IN_PROGRESS]);
             
-            try {
-                $result = call_user_func(array('Plp\\Task\\'.$taskClass, $taskMethod), $taskData);
-                $this->updateFields($task, $result, self::STATUS_SUCCESSFULL);                           
-            } catch (FatalException $e) {
-                $this->updateFields($task, ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()], self::STATUS_FATAL_EXCEPTION);                                              
-            }catch (UserException $e) {
-                $this->updateFields($task, ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()], self::STATUS_USER_EXCEPTION);                
+            if(class_exists($taskClass)){
+                if(method_exists($taskClass, $taskMethod)) {
+                    try {
+                        $result = call_user_func(array($taskClass, $taskMethod), $taskData);
+                        $this->updateFields($task, $result, self::STATUS_SUCCESSFULL);                           
+                    } catch (FatalException $e) {
+                        $this->updateFields($task, ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()], self::STATUS_FATAL_EXCEPTION);                                              
+                    }catch (UserException $e) {
+                        $this->updateFields($task, ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()], self::STATUS_USER_EXCEPTION);                
+                    }
+                }
+                else {
+                    $this->updateFields($task, ['message' => $taskMethod." doesn't exist in ".$taskClass], self::STATUS_FATAL_EXCEPTION);
+                }                
             }
-            
+            else {
+                $this->updateFields($task, ['message' => $taskClass." doesn't exist"], self::STATUS_FATAL_EXCEPTION);
+            }
+                        
             echo "Task ".$task->id." (".$task->task."::".$task->action.") finished ".$task->finished."\n";
             echo "Result: ".$task->result."\n";
         }
