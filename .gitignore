@@ -31,3 +31,5 @@ controllers/
 mail/
 views/
 web/
+tests/_output/*
+tests/_output/*
