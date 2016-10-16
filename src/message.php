@@ -3,7 +3,8 @@
 namespace Plp\Task;
 
 class message {
-    static function sms($data) {
-        return $data;
+    static public function sms($data) {
+        $res = ["result" => true];
+        return $res;
     }
 }

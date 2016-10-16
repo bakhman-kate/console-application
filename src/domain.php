@@ -3,7 +3,8 @@
 namespace Plp\Task;
 
 class domain {
-    static function addzone($data) {
-        return $data;
+    static public function addzone($data) {
+        $res = ["result" => true];
+        return $res;
     }    
 }

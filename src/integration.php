@@ -3,7 +3,8 @@
 namespace Plp\Task;
 
 class integration {
-    static function process($data) {
-        return $data;
+    static public function process($data) {
+        $res = ["result" => true];
+        return $res;
     }
 }
